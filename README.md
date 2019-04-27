@@ -2,7 +2,6 @@
 - 桌面应用程序开发：electron
 - web应用程序开发：vue + node.js
 
-
 ## 高德地图
 - (室内地图 JS API)[https://lbs.amap.com/api/javascript-api/reference/indoormap]
     + 通用平台：Web、Android、iOS
@@ -22,6 +21,7 @@
             - name：店铺名称
             - lnglat：店铺经纬度
             - building_id：店铺所属楼宇信息
+
 - (定位 JS API)[https://lbs.amap.com/getting-started/locate]
     + 通用平台：Web、Android、iOS
     + 宣传优势
@@ -52,6 +52,7 @@
         * CitySearchResult对象
             - city：城市名称
             - bounds：地图展示该城市时的矩形区域
+
 - (室内定位 SDK)[https://lbs.amap.com/api/android-indoorlocation-sdk/summary] 
     + 通用平台：Android、IOS
     + 宣传优势
