@@ -84,33 +84,31 @@
 
 
 ## 百度地图
-- 百度地图api-室内图 ()[http://lbsyun.baidu.com/products/products/indoor]
-- 百度地图JavaScript API-定位 ()[http://lbsyun.baidu.com/index.php?title=jspopular/guide/geolocation]
-- 百度地图api-室内定位管理平台 ()[http://lbsyun.baidu.com/indoor/indoormap/introduct]
-- 百度地图需要认证，身份证
+- (室内图)[http://lbsyun.baidu.com/products/products/indoor]
+    + 通用平台：Web、Android、iOS
+    + 宣传优势
+        * 覆盖全国4000家大型建筑
+        * 分层浏览
+        * POI检索
+        * 路线指引
+- (定位 JS API)[http://lbsyun.baidu.com/index.php?title=jspopular/guide/geolocation]
+    + 通用平台：Web、Android、iOS
+    + 宣传优势
+        * 米级室内定位
+        * 定位服务全球化
+        * 智能硬件定位
+        * 离线定位
+        * 位置语义化
+        * 地理围栏
+        * IP定位(HTTP协议中的定位接口，精度不高)
+- (室内定位管理平台)[http://lbsyun.baidu.com/indoor/indoormap/introduct]
+    + 对企业级开放的API
 
 ## 阿里云
-- 阿里云api-图像识别
+- (图像识别API)[https://ai.aliyun.com/image]
     + 业务场景
         * 通过模式识别、机器学习技术分析图像，识别其中的场景和物体
     + 服务
-        * 图像打标、场景识别、鉴黄
-- 阿里云官方服务API校验规范
-    + API整体校验规则
-    ```
-    Authorization =  Dataplus AccessKeyId + ":" + Signature
-
-    Signature = Base64( HMAC-SHA1( AccessSecret, UTF-8-Encoding-Of(StringToSign) ) )
-
-    StringToSign =
-      //HTTP协议header
-      HTTP-Verb + "\n" +    //GET|POST|PUT...
-      Accept + "\n" +
-      Content-MD5 + "\n" +  //Body的MD5值放在此处
-      Content-Type + "\n" +
-      Date + "\n" +
-      url
-
-    ```
-    + 签名计算方法
-    + 公共请求头计算签名
+        * 图像打标、**场景识别**、鉴黄
+    + 场景识别API
+- (阿里云官方服务API校验规范)[https://help.aliyun.com/document_detail/30245.html]
