@@ -1,102 +1,22 @@
-# 思路 
-1. 调用阿里云的场景识别API(传参为image的url,返回格式如下)
-![办公室1](https://img-blog.csdnimg.cn/20190429101015252.jpg)
-```
- {
-    "tags":[
-    {"value":"办公室","confidence":59.0},
-    {"value":"室外","confidence":40.0},
-    {"value":"其他","confidence":15.0},
-    {"value":"演出","confidence":14.0},
-    {"value":"会议室","confidence":12.0}],
-    "errno":0,
-    "request_id":"a6d8ed9d-b317-4421-a4f0-5b66469b8b9d"
- }
-```
-![室外1](https://img-blog.csdnimg.cn/20190429103609142.jpg)
-```
-{
-    "tags":[
-    {"value":"海滨","confidence":96.0},
-    {"value":"小河","confidence":13.0},
-    {"value":"沙滩","confidence":11.0},
-    {"value":"广场","confidence":11.0},
-    {"value":"室外","confidence":11.0}],
-    "errno":0,
-    "request_id":"0469acac-3fcf-4233-ba48-63fddce3ef05"
-}
-```
-![办公室2](https://img-blog.csdnimg.cn/20190429103048812.jpg)
-```
-{
-    "tags":
-    [{"value":"办公室","confidence":99.0}],
-    "errno":0,
-    "request_id":"a693c957-51fa-49b3-9105-9eaddefed71d"
-}
-```
-![走廊3](https://img-blog.csdnimg.cn/20190429103718380.jpg)
-```
-{
-    "tags":
-    [{"value":"物品","confidence":69.0},
-    {"value":"其他","confidence":16.0},
-    {"value":"演出","confidence":14.0},
-    {"value":"室外","confidence":14.0},
-    {"value":"卧室","confidence":14.0}],
-    "errno":0,
-    "request_id":"d289460f-2425-4042-a893-14aeaaa206ce"
-}
-```
-![走廊1](https://img-blog.csdnimg.cn/20190429103733718.jpg)
-```
-{
-    "tags":
-    [{"value":"办公室","confidence":55.0},
-    {"value":"会议室","confidence":20.0},
-    {"value":"餐厅","confidence":16.0},
-    {"value":"演出","confidence":15.0},
-    {"value":"其他","confidence":14.0}],
-    "errno":0,
-    "request_id":"ce8e1aaf-6c56-4747-8217-87ddbee26942"
-}
-```
-![大厅1](https://img-blog.csdnimg.cn/2019042910374890.jpg)
-```
-{
-    "tags":
-    [{"value":"物品","confidence":45.0},
-    {"value":"办公室","confidence":24.0},
-    {"value":"演出","confidence":23.0},
-    {"value":"其他","confidence":14.0},
-    {"value":"人物","confidence":13.0}],
-    "errno":0,
-    "request_id":"157dac48-22e6-4098-9c3e-a822865cdc1b"
-}
-```
-![走廊2](https://img-blog.csdnimg.cn/20190429103757682.jpg)
-```
-{
-    "tags":
-    [{"value":"物品","confidence":66.0},
-    {"value":"办公室","confidence":54.0},
-    {"value":"室内","confidence":16.0},
-    {"value":"餐厅","confidence":12.0},
-    {"value":"演出","confidence":11.0}],
-    "errno":0,
-    "request_id":"1a555523-96de-4c2d-be84-44dfc6aca3bc"
-}
-```
+# 目标和关键技术分析
+1>目标：让用户只需要用手机相机对周围环境进行拍摄操作，就能够实现室内定位。
+2>关键技术分析：
+    1.计算机视觉图像分析
+    1)通过手机相机获取图像，使用图像分析算法对图像进行分析(图像文字识别、场景识别)。
+    2)图像文字识别：获取图片价值高的文字，在定位API的POI搜索栏中搜索来实现定位。
+    3)场景识别：使用场景识别API对图片中的场景进行分析、筛选
+    2.室内定位
+    1)室内图显示：此处可以和WebGL相结合。
+        2)定位实现：此处可以与传统WiFi指纹识别技术相结合。
+    3.室内导航
+    1)导航路线：此处可以和AR相结合。
 
-    每个`value`都有对应的`confidence`，遍历所有列出的`value`,找到和室内相关的标签并记录
+# 实现思路
+1. 当系统获取用户拍摄的图片后，对图片进行分析(考虑使用阿里云API，目前来看准确度不高，需要定制优化。)
+2.从步骤1中分析出有用的信息，在这些信息的基础上做出定位判断。此处可以考虑调用高德地图的室内图API(demo截图如下图)。此处可以将WebGL加入室内图的实现
+3.步骤2完成之后基本已经实现室内定位。此时可以输入目的地将AR与导航路线相结合。
 
-2. 调用百度地图的定位API
-
-# 实现
-- 桌面应用程序开发：[electron](https://electronjs.org/)
-- web应用程序开发：vue + node.js
-
-# 国内的定位API
+# API
 ## 高德地图
 - [室内地图 JS API](https://lbs.amap.com/api/javascript-api/reference/indoormap)
     + 通用平台：Web、Android、iOS
@@ -207,3 +127,100 @@
         * 图像打标、**场景识别**、鉴黄
     + 场景识别API
 - [阿里云官方服务API校验规范](https://help.aliyun.com/document_detail/30245.html)
+
+# 阿里云场景识别测试数据
+![办公室1](https://img-blog.csdnimg.cn/20190429101015252.jpg)
+```
+ {
+    "tags":[
+    {"value":"办公室","confidence":59.0},
+    {"value":"室外","confidence":40.0},
+    {"value":"其他","confidence":15.0},
+    {"value":"演出","confidence":14.0},
+    {"value":"会议室","confidence":12.0}],
+    "errno":0,
+    "request_id":"a6d8ed9d-b317-4421-a4f0-5b66469b8b9d"
+ }
+```
+![室外1](https://img-blog.csdnimg.cn/20190429103609142.jpg)
+```
+{
+    "tags":[
+    {"value":"海滨","confidence":96.0},
+    {"value":"小河","confidence":13.0},
+    {"value":"沙滩","confidence":11.0},
+    {"value":"广场","confidence":11.0},
+    {"value":"室外","confidence":11.0}],
+    "errno":0,
+    "request_id":"0469acac-3fcf-4233-ba48-63fddce3ef05"
+}
+```
+![办公室2](https://img-blog.csdnimg.cn/20190429103048812.jpg)
+```
+{
+    "tags":
+    [{"value":"办公室","confidence":99.0}],
+    "errno":0,
+    "request_id":"a693c957-51fa-49b3-9105-9eaddefed71d"
+}
+```
+![走廊3](https://img-blog.csdnimg.cn/20190429103718380.jpg)
+```
+{
+    "tags":
+    [{"value":"物品","confidence":69.0},
+    {"value":"其他","confidence":16.0},
+    {"value":"演出","confidence":14.0},
+    {"value":"室外","confidence":14.0},
+    {"value":"卧室","confidence":14.0}],
+    "errno":0,
+    "request_id":"d289460f-2425-4042-a893-14aeaaa206ce"
+}
+```
+![走廊1](https://img-blog.csdnimg.cn/20190429103733718.jpg)
+```
+{
+    "tags":
+    [{"value":"办公室","confidence":55.0},
+    {"value":"会议室","confidence":20.0},
+    {"value":"餐厅","confidence":16.0},
+    {"value":"演出","confidence":15.0},
+    {"value":"其他","confidence":14.0}],
+    "errno":0,
+    "request_id":"ce8e1aaf-6c56-4747-8217-87ddbee26942"
+}
+```
+![大厅1](https://img-blog.csdnimg.cn/2019042910374890.jpg)
+```
+{
+    "tags":
+    [{"value":"物品","confidence":45.0},
+    {"value":"办公室","confidence":24.0},
+    {"value":"演出","confidence":23.0},
+    {"value":"其他","confidence":14.0},
+    {"value":"人物","confidence":13.0}],
+    "errno":0,
+    "request_id":"157dac48-22e6-4098-9c3e-a822865cdc1b"
+}
+```
+![走廊2](https://img-blog.csdnimg.cn/20190429103757682.jpg)
+```
+{
+    "tags":
+    [{"value":"物品","confidence":66.0},
+    {"value":"办公室","confidence":54.0},
+    {"value":"室内","confidence":16.0},
+    {"value":"餐厅","confidence":12.0},
+    {"value":"演出","confidence":11.0}],
+    "errno":0,
+    "request_id":"1a555523-96de-4c2d-be84-44dfc6aca3bc"
+}
+```
+    每个`value`都有对应的`confidence`，遍历所有列出的`value`,找到和室内相关的标签并记录
+
+
+
+# 实现
+- 桌面应用程序开发：[electron](https://electronjs.org/)
+- web应用程序开发：vue + node.js
+
